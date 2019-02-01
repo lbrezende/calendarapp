@@ -9,9 +9,11 @@ Make a calendar app. The calendar should display all the dates for the current m
 * No two appointments should overlap. If an appointment already exists for a day, a warning should be shown.
 * Appointments can be edited and deleted.
 
-# Things I should care following the requirements
+# Personal guides
 
-| Requirement | Things to care about |
+In order to follow the requirements some things must be consider:
+
+| Requirement | Details that might help |
 | ------ | ------ |
 | The calendar should display all the dates for the current month | The app will display *ONLY* the current month. I will use javascript to get the current month |
 | The calendar app should also be able to mark appointments | It must have a clear call to action to mark appointments |
