@@ -196,6 +196,7 @@ td.calendar__days--beforetoday {
 }
 
 td.calendar__days--beforetoday:hover {
+	color: rgba(192, 192, 207, 0.2);
 	background: #FCFCFF;
 	cursor: not-allowed;
     -webkit-transition: none;
