@@ -5,6 +5,9 @@ $(document).ready(function(){
 	initializeCalendar();
 	initializeCalendarDetails();
 
+	$("#calendar-details").slideToggle();
+
+
 
 	/*Date helpers with important numbers to generate the calendar such as current day, month, year, and other presentation forms*/
 	function initializeDates(){
@@ -12,8 +15,10 @@ $(document).ready(function(){
 		/* Current Date*/
 		var date = new Date();
 		month = date.getMonth();
-		monthPlus = date.getMonth()+1;
+		
+		monthPlus = month+1;
 
+		//Adding 0 in front of numbers of 1 digit
 		currentMonthMM = ((''+monthPlus).length<2 ? '0' : '') + monthPlus;
 		day = date.getDate();
 		currentDayDD = ((''+day).length<2 ? '0' : '') + day;
@@ -36,8 +41,8 @@ $(document).ready(function(){
 		const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 		const monthNamesSmall = ["Jan", "Feb", "March", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
-		currentMonthName = monthNames[date.getMonth()];
-		currentMonthNameMMM= monthNamesSmall[date.getMonth()];
+		currentMonthName = monthNames[month];
+		currentMonthNameMMM= monthNamesSmall[month];
 
 
 		//Used to get how many days needs to be left blank in the calendar
@@ -60,13 +65,15 @@ $(document).ready(function(){
 			var dayCounter = 1;
 			var blankCounter = 1;
 			var weekdaysDefault = weekdays;
-
+			var end = 0;
 			//Defines how many days needs to be ploted on the fist line
 			extraDays = 7-weekdaysDefault;
 
 
 			//Loops how many lines are needed to complete the month
-			while (dayCounter < numberOfDays) {
+			while (dayCounter <= numberOfDays) {
+				if (end == 1) {break};
+
 				calendarHTML += "<tr class=\"calendar__days\">";
 
 					//Adds the blank days of the previous month
@@ -80,10 +87,7 @@ $(document).ready(function(){
 					 //Loops each line of the calendar
 					 while ( counter <= extraDays) {
 
-					 		//Breaks if the number of the days of the month is reached
-							if (dayCounter > numberOfDays) {
-								break;
-							};
+
 
 							//Add classes for days before current day and for current day
 					 		if (dayCounter < day) {
@@ -96,9 +100,15 @@ $(document).ready(function(){
 					 		
 
 					 		//Adds each day to the HTML
-							calendarHTML += "<td id=\""+currentMonthMM+""+dayCounter+""+currentYearYYYY+"\" class=\""+classname+"\">"+dayCounter+"</td>";
+							calendarHTML += "<td id=\""+monthPlus+""+dayCounter+""+currentYearYYYY+"\" month=\""+monthPlus+"\" day=\""+dayCounter+"\" year=\""+currentYearYYYY+"\" class=\""+classname+"\">"+dayCounter+"</td>";
+
+							if (dayCounter == numberOfDays) {
+								end = 1;
+								break;
+							}
 							counter++;
 							dayCounter++;
+
 							
 					 }
 
@@ -112,7 +122,7 @@ $(document).ready(function(){
 		//Ends the calendar	
 		calendarHTML += "</tbody></table>";
 
-		$("#calendar").html(calendarHTML);
+		$("#calendarArea").html(calendarHTML);
 
 
 	}
@@ -120,8 +130,9 @@ $(document).ready(function(){
 	function initializeCalendarDetails() {
 		//Adds the calendar header to the HTML variable
 
-		var calendarDetailsHTML = "calendarDetailsHTML";
-		$("#calendarDetails").html(calendarDetailsHTML);
+		var calendarDetailsHTML = "<div id=\"calendar-details\" style=\"display:none\"><div class=\"calendar-details__title\"><span id=\"currentMonthSmall\">"+currentMonthNameMMM+"</span>, <span id=\"currentDay\">"+currentDayDD+"<span></div><div class=\"calendar-details__subject--header\">Your appointment</div><div class=\"calendar-details__subject\"><textarea id=\"calendar-details__textarea\" type=\"text\" name=\"subject\" placeholder=\"Type the subject...\"></textarea><button id=\"calendar-details__button-primary\" onclick=\"removeAppointment();\">Remove appointment</button></div></div>";
+
+		$("#calendarDetailsArea").html(calendarDetailsHTML);
 
 	}
 
