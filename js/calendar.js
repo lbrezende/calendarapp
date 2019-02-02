@@ -1,7 +1,6 @@
 $(document).ready(function(){
 
 	$(".calendar__days td").click(function(){
-		console.log("here");
    		manageAppointments($(this));
 	});
 
@@ -16,8 +15,28 @@ $(document).ready(function(){
 				} else {
 					/* If the date is not free, the user can open and the appointment */
 					openAppointment(selectedDate);
-					/* After seeing the appointment, the user can decide if he wants to clear the agenda */
-					clearAgenda(selectedDate);
+					/* After seeing the appointment, the user can decide if he wants to clear the agenda or update */
+	
+					appointmentDay = 15;
+					appointmentMonth = 02;
+					appointmentYear = 2019;
+					appointmentDate = appointmentMonth + "/" + appointmentDay + "/" + appointmentYear;
+
+					clearAgenda = confirm("Do you want to clear your agenda for " + appointmentDate + " ?");
+
+					if (clearAgenda) {
+						/*Removes the appointment */
+						removeAppointment(selectedDate);
+
+					} else {
+
+						updateAgenda = confirm("What about update your appointment?");
+
+						if (updateAgenda) {
+							/*Update the appointment */
+							updateAppointment(selectedDate);
+						}
+					}
 				}
 			}
 	}
@@ -53,9 +72,6 @@ $(document).ready(function(){
 		appointmentSubject = selectedDate.attr( "data-appointment" );
 		alert("Your appointment is '" + appointmentSubject + "'");
 
-		/* Verify if the user wants to remove appointment */
-		removeAppointment(selectedDate)
-
 	}
 
 	/* 
@@ -68,7 +84,7 @@ $(document).ready(function(){
 		if (subject != null) {
 		    selectedDate.attr('data-appointment', subject);
 			/*Add the appointment class*/
-			alert("Your appointment is market")
+			alert("Your appointment '" + subject + "' is market")
 			selectedDate.addClass("calendar__days--appointment");
 		} else {
 			/*if the user refuses to define the subject, the agenda must remain clear */
@@ -97,12 +113,31 @@ $(document).ready(function(){
 			/*Removes the appointment subject*/
 			selectedDate.removeAttr("data-appointment");
 
-			/*Feedbacks the appointment is removed*/
-			alert("I got your back! Your agenda is clear!")
 		}
-
 
 	}
 
+	/* 
+	   updateAppointment remove the appointment in the selected date and feedback the user
+	*/
+	function updateAppointment(selectedDate) {
+
+		/* Asks if the user wants to remove the appointment. If yes, remove and feedback the user. */
+		appointmentDay = 15;
+		appointmentMonth = 02;
+		appointmentYear = 2019;
+
+		var newSubject = prompt("What is the new appointment subject");
+
+		if (newSubject != null) {
+		    selectedDate.attr('data-appointment', newSubject);
+			/*Add the appointment class*/
+			alert("Your appointment '" + newSubject + "' is updated")
+		} else {
+			/*if the user refuses to define the subject, the agenda must remain clear */
+			alert("Ok, the appointment remains'" + currentSubject + "'")
+		}
+
+	}
 
 });

@@ -90,8 +90,8 @@ li {
 }
 
 .instructions {
-	color: #F2F1FF;
-	background: #3123BD;
+	color: #444;
+	background: #f1f1f1;
 	padding: 20px;
 	margin: 20px 0px;
 }
@@ -102,20 +102,23 @@ Calendar block
 
 
 .calendar {
+	float: left;
 	font-size: 1em;
 	font-weight: 300;
 	color: #3C3E42;
 	background: #FCFCFF;
 	line-height: 1em;
 	box-shadow: 1px 1px 4px rgba(0,0,0,0.1);
+	z-index: 1;
 }
 
 /* Calendar Title */
 
 .calendar__title {
+
 }
 
-.calendar__title-currentmonth {
+.calendar__title--currentmonth {
     color: #3123BD;
     background: #FCFCFF;
     font-size: 1.5em;
@@ -126,7 +129,7 @@ Calendar block
 }
 
 
-.calendar__title-daysofweek td {
+.calendar__title--daysofweek td {
     color: #ACAEC4;
     background: #FCFCFF;
     font-size: 1em;
@@ -135,6 +138,79 @@ Calendar block
     padding: 8px;
     border-bottom: 1px solid rgba(192, 192, 207, 0.2);
 }
+
+
+.calendar-details {
+    width:350px;
+    float: left;
+    z-index: 0;
+}
+
+.calendar-details__title {
+    color: #F2F1FF;
+    background: #3123BD;
+    font-size: 1.2em;
+    line-height: 1.2em;
+    text-align: left;
+    font-weight: 400;
+    padding: 8px;
+}
+
+.calendar-details__subject {
+    color: #F2F1FF;
+    background: #4135BB;
+    font-size: 1.2em;
+    line-height: 1.2em;
+    vertical-align: top;
+    text-align: center;
+    font-weight: 400;
+    padding: 16px;
+}
+
+.calendar-details__subject--header {
+	font-size:0.8em;
+	color: #F2F1FF;
+    background: #4135BB;
+    padding: 8px 16px;
+}
+
+.calendar-details__textarea {
+	color: #F2F1FF;
+    background: #4135BB;
+    font-size:1em;
+    height: 130px;
+    width:100%;
+    border:0;
+    outline:none;
+
+}
+
+.calendar-details__textarea::placeholder {
+    color: rgba(242,241,255,0.32);
+}
+
+.calendar-details__button-primary {
+	font-size:16px;
+    background-color: #FFFr;
+    color: #3123BD;
+    padding: 16px;
+    width: 100%;
+    margin-left: 5 auto;
+    border: none;
+    box-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+    cursor: pointer;
+    outline: none;
+}
+
+.calendar-details__button-primary:hover {
+    background-color: #F2F1FF;
+}
+
+.calendar-details__button-primary:active {
+    background-color: #F9F9FF;
+}
+
+
 
 /* Calendar Days */
 
