@@ -1,144 +1,130 @@
 $(document).ready(function(){
 
-	$(".calendar__days td").click(function(){
-   		manageAppointments($(this));
-	});
 
-	function manageAppointments(selectedDate) {
-
-		/* If the date is in in the past, the user can not mark an appointment */
-			if (isAppointmentAllowed(selectedDate)) {
-
-				/* If the date is free, the user can mark an appointment */
-				if(!dateHasAppointment(selectedDate)) {
-					appointmentDay = selectedDate.text();
-					appointmentMonth = 02;
-					appointmentYear = 2019;
-					appointmentDate = appointmentMonth + "/" + appointmentDay + "/" + appointmentYear;
-					markAppointment(selectedDate, appointmentDay, appointmentMonth, appointmentYear, appointmentDate);
-				} else {
-					/* If the date is not free, the user can open and the appointment */
-					openAppointment(selectedDate, appointmentDay, appointmentMonth, appointmentYear, appointmentDate);
-					/* After seeing the appointment, the user can decide if he wants to clear the agenda or update */
-	
+	initializeDates();
+	initializeCalendar();
+	initializeCalendarDetails();
 
 
-					clearAgenda = confirm("Do you want to clear your agenda for " + appointmentDate + " ?");
+	/*Date helpers with important numbers to generate the calendar such as current day, month, year, and other presentation forms*/
+	function initializeDates(){
 
-					if (clearAgenda) {
-						/*Removes the appointment */
-						removeAppointment(selectedDate, appointmentDay, appointmentMonth, appointmentYear, appointmentDate);
+		/* Current Date*/
+		var date = new Date();
+		month = date.getMonth();
+		monthPlus = date.getMonth()+1;
 
-					} else {
+		currentMonthMM = ((''+monthPlus).length<2 ? '0' : '') + monthPlus;
+		day = date.getDate();
+		currentDayDD = ((''+day).length<2 ? '0' : '') + day;
+		currentYearYYYY = date.getFullYear();
 
-						updateAgenda = confirm("What about update your appointment?");
+		//Determing if February (28,or 29).
+		//I copied this snippet. Ain't nobody have time for that.
 
-						if (updateAgenda) {
-							/*Update the appointment */
-							updateAppointment(selectedDate, appointmentDay, appointmentMonth, appointmentYear, appointmentDate);
-						}
-					}
-				}
-			}
-	}
-
-	/* 
-	   isAppointmentAllowed verifies if the selected date is in the past. 
-	   boolean
-
-	   "True" 	means the user can mark an appointment
-	   "False" 	means this date is in the past and the user should not be able to mark an appointment
-	*/
-	function isAppointmentAllowed(selectedDate) {
-		return !(selectedDate.hasClass( "calendar__days--beforetoday" ))
-	}
-
-	/* 
-	   hasAppointment verifies if the selected date already has an appointment. 
-	   boolean
-	   
-	   "True" 	means this date already has an appointment
-	   "False" 	means this date is appointment free
-	*/
-	function dateHasAppointment(selectedDate) {
-		return (selectedDate.hasClass( "calendar__days--appointment" ))
-	}
-
-	/* 
-	   openAppointment asks the user the subject of the appointment and mark
-	*/
-	function openAppointment(selectedDate, appointmentDay, appointmentMonth, appointmentYear, appointmentDate) {
-
-		/* Show the user his appointment */
-		appointmentSubject = selectedDate.attr( "data-appointment" );
-		alert("Your appointment is '" + appointmentSubject + "'");
-
-	}
-
-	/* 
-	   markAppointment adds an appointment to the selected date
-	*/
-	function markAppointment(selectedDate, appointmentDay, appointmentMonth, appointmentYear, appointmentDate) {
-
-		var subject = prompt("What is your appointment subject");
-
-		if (subject != null) {
-		    selectedDate.attr('data-appointment', subject);
-			/*Add the appointment class*/
-			alert("Your appointment '" + subject + "' is marked")
-			selectedDate.addClass("calendar__days--appointment");
-		} else {
-			/*if the user refuses to define the subject, the agenda must remain clear */
-			alert("I got it! Your agenda remains clear")
+		var FebruaryNumberOfDays ="";
+		if (month == 1){
+		   if ( (currentYearYYYY%100!=0) && (currentYearYYYY%4==0) || (currentYearYYYY%400==0)){
+		     FebruaryNumberOfDays = 29;
+		   }else{
+		     FebruaryNumberOfDays = 28;
+		   }
 		}
 
-	}
+		//Date helpers
+		dayPerMonth = ["31", ""+FebruaryNumberOfDays+"","31","30","31","30","31","31","30","31","30","31"];
+		const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+		const monthNamesSmall = ["Jan", "Feb", "March", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
-	/* 
-	   removeAppointment remove the appointment in the selected date and feedback the user
-	*/
-	function removeAppointment(selectedDate, appointmentDay, appointmentMonth, appointmentYear, appointmentDate) {
+		currentMonthName = monthNames[date.getMonth()];
+		currentMonthNameMMM= monthNamesSmall[date.getMonth()];
 
-		/* Asks if the user wants to remove the appointment. If yes, remove and feedback the user. */
-		appointmentDay = 15;
-		appointmentMonth = 02;
-		appointmentYear = 2019;
-		appointmentDate = appointmentMonth + "/" + appointmentDay + "/" + appointmentYear;
 
-		removeSubject = confirm("Do you want to clear your agenda for " + appointmentDate + " ?");
-
-		if (removeSubject) {
-			/*Removes the appointment marker*/
-			selectedDate.removeClass("calendar__days--appointment");
-
-			/*Removes the appointment subject*/
-			selectedDate.removeAttr("data-appointment");
-
-		}
+		//Used to get how many days needs to be left blank in the calendar
+		nextMonth = month+1; //+1; //Used to match up the current month with the correct start date.
+		prevMonth = month -1;
+		nextDate = new Date(nextMonth +' 1 ,'+currentYearYYYY);
+ 		weekdays= nextDate.getDay();
 
 	}
 
-	/* 
-	   updateAppointment remove the appointment in the selected date and feedback the user
-	*/
-	function updateAppointment(selectedDate, appointmentDay, appointmentMonth, appointmentYear, appointmentDate) {
+	//Creates the calendar
+	function initializeCalendar() {
+		//Adds the calendar header to the HTML variable
+		var calendarHTML = "<table id=\"calendar\"><thead class=\"calendar__title\"><th class=\"calendar__title--currentmonth\" colspan=\"7\"><span id=\"thisMonth\">"+ currentMonthName +"</span> <span id=\"thisYear\">"+ currentYearYYYY +"<span></th></thead><tbody><tr class=\"calendar__title--daysofweek\"><td>Sun</td><td>Mon</td><td>Tue</td><td>Wed</td><td>Thu</td><td>Fri</td><td>Sat</td></tr>";
 
-		/* Asks if the user wants to remove the appointment. If yes, remove and feedback the user. */
-		appointmentDay = 15;
-		appointmentMonth = 02;
-		appointmentYear = 2019;
+			//Verifies how many days needs to be ploted in the current month
+			numberOfDays = dayPerMonth[month];
 
-		var newSubject = prompt("What is the new appointment subject");
+			//Verifies how many days needs to be left blank
+			var dayCounter = 1;
+			var blankCounter = 1;
+			var weekdaysDefault = weekdays;
 
-		if (newSubject != null) {
-		    selectedDate.attr('data-appointment', newSubject);
-			/*Add the appointment class*/
-			alert("Your appointment '" + newSubject + "' is updated")
-		} else {
-			/*if the user refuses to define the subject, the agenda must remain clear */
-			alert("Ok, the appointment remains'" + currentSubject + "'")
-		}
+			//Defines how many days needs to be ploted on the fist line
+			extraDays = 7-weekdaysDefault;
+
+
+			//Loops how many lines are needed to complete the month
+			while (dayCounter < numberOfDays) {
+				calendarHTML += "<tr class=\"calendar__days\">";
+
+					//Adds the blank days of the previous month
+					while (blankCounter <= weekdays) {
+					 calendarHTML += "<td class=\"calendar__days--beforetoday\">&nbsp;</td>";
+					 weekdays--;
+					};
+
+					 var counter = 1;
+
+					 //Loops each line of the calendar
+					 while ( counter <= extraDays) {
+
+					 		//Breaks if the number of the days of the month is reached
+							if (dayCounter > numberOfDays) {
+								break;
+							};
+
+							//Add classes for days before current day and for current day
+					 		if (dayCounter < day) {
+					 			classname = "calendar__days--beforetoday";
+					 		} else if (dayCounter == day) {
+					 			classname = "calendar__days--current";
+					 		} else {
+					 			classname = "";
+					 		}
+					 		
+
+					 		//Adds each day to the HTML
+							calendarHTML += "<td id=\""+currentMonthMM+""+dayCounter+""+currentYearYYYY+"\" class=\""+classname+"\">"+dayCounter+"</td>";
+							counter++;
+							dayCounter++;
+							
+					 }
+
+					 //Sets the number of lines to default after first line and restart line counter
+					 extraDays = 7;
+					 var counter = 1;
+				//Ends each line
+				calendarHTML += "</tr>";
+			};
+
+		//Ends the calendar	
+		calendarHTML += "</tbody></table>";
+
+		$("#calendar").html(calendarHTML);
+
 
 	}
+	//Creates the calendar detais
+	function initializeCalendarDetails() {
+		//Adds the calendar header to the HTML variable
+
+		var calendarDetailsHTML = "calendarDetailsHTML";
+		$("#calendarDetails").html(calendarDetailsHTML);
+
+	}
+
+
 
 });

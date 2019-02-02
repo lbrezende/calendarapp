@@ -101,7 +101,7 @@ Calendar block
 ******************************************************************/
 
 
-.calendar {
+#calendar {
 	float: left;
 	font-size: 1em;
 	font-weight: 300;
@@ -140,7 +140,7 @@ Calendar block
 }
 
 
-.calendar-details {
+#calendar-details {
     width:350px;
     float: left;
     z-index: 0;
@@ -153,7 +153,7 @@ Calendar block
     line-height: 1.2em;
     text-align: left;
     font-weight: 400;
-    padding: 8px;
+    padding: 16px;
 }
 
 .calendar-details__subject {
@@ -174,22 +174,22 @@ Calendar block
     padding: 8px 16px;
 }
 
-.calendar-details__textarea {
+#calendar-details__textarea {
 	color: #F2F1FF;
     background: #4135BB;
     font-size:1em;
-    height: 130px;
+    height: 154px;
     width:100%;
     border:0;
     outline:none;
 
 }
 
-.calendar-details__textarea::placeholder {
+#calendar-details__textarea::placeholder {
     color: rgba(242,241,255,0.32);
 }
 
-.calendar-details__button-primary {
+#calendar-details__button-primary {
 	font-size:16px;
     background-color: #FFFr;
     color: #3123BD;
@@ -202,11 +202,11 @@ Calendar block
     outline: none;
 }
 
-.calendar-details__button-primary:hover {
+#calendar-details__button-primary:hover {
     background-color: #F2F1FF;
 }
 
-.calendar-details__button-primary:active {
+#calendar-details__button-primary:active {
     background-color: #F9F9FF;
 }
 
@@ -234,14 +234,14 @@ Calendar block
 }
 
 td.calendar__days--current {
-	background: #3123BD;
-	color: #F2F1FF;
+	background: rgba(49, 35, 189, 0.1) !important;
+	color: #3123BD;
 	padding: 2px;
 }
 
 td.calendar__days--current:hover {
-	background: #1d1475;
-	color: #F2F1FF;
+	background: rgba(49, 35, 189, 0.1) !important;
+	color: #3123BD;
     -webkit-transition: all 0.1s ease-in-out;
     -moz-transition: all 0.1s ease-in-out;
     -o-transition: all 0.1s ease-in-out;
@@ -249,11 +249,14 @@ td.calendar__days--current:hover {
 }
 
 td.calendar__days--selected {
-	background: rgba(49, 35, 189, 0.1);
-	color: #3123BD;
+	background: #3123BD !important;
+	color: #F2F1FF;
 	padding: 2px;
 }
 
+td.calendar__days--selected:hover {
+	color: #FFF;
+}
 
 td.calendar__days--beforetoday {
 	color: rgba(192, 192, 207, 0.2);
@@ -264,10 +267,7 @@ td.calendar__days--beforetoday:hover {
 	color: rgba(192, 192, 207, 0.2);
 	background: #FCFCFF;
 	cursor: not-allowed;
-    -webkit-transition: none;
-    -moz-transition: none;
-    -o-transition: none;
-    transition: none;
+		padding: 2px;
 }
 
 td.calendar__days--weekend {
@@ -275,5 +275,7 @@ td.calendar__days--weekend {
 }
 
 td.calendar__days--appointment {
+	background: #fed34126;
+	border-radius:0;
 	border-bottom: 2px solid #FED341;
 }
