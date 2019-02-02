@@ -4,9 +4,29 @@ $(document).ready(function(){
 	initializeDates();
 	initializeCalendar();
 	initializeCalendarDetails();
+	initializeEventListeners();
+
+
+	function eventListeners() {
+
+		//when clicks any day
+
+		//when clicks addAppointment
+
+		//when clicks removeAppointment
+
+		//when clicks updateAppointment
+
+		//when clicks the close button
+		$("#hideDetail").click(function(){
+			closeAppointment()
+		});
+	}
+
+
 
 	//it is called whenever the user clicks a date today or in the future
-	function openAppointment() {
+	function openAppointment(day, month, year) {
 		//Get the json file
 
 		//Verify if the date has any text
@@ -17,9 +37,14 @@ $(document).ready(function(){
 	}
 
 	//it is called if the user clicks #addAppointment and text area is not empty
-	function addAppointment() {
+	function addAppointment(day, month, year) {
 
-		//Get the text area #calendar-details__textarea text and add to a json file
+		//Get the text area #calendar-details__textarea 
+
+		var appointmentContent = $("#calendar-details__textarea").text();
+
+		//Add to json file
+		//appointmentContent.addJson(thisDate)
 
 		//Add date css mark .slide-out-elliptic-top-bck
 
@@ -28,7 +53,7 @@ $(document).ready(function(){
 	}
 
 	//it is called when the user clicks the #removeAppointment button
-	function removeAppointment() {
+	function removeAppointment(day, month, year) {
 
 		//remove data from json to the select data
 
@@ -39,7 +64,7 @@ $(document).ready(function(){
 	}
 
 	//it is called when the user clicks #updateAppointment update button and text area is not empty
-	function updateAppointment() {
+	function updateAppointment(day, month, year) {
 
 		//Get the text area #calendar-details__textarea text and add to a json file
 
@@ -50,20 +75,16 @@ $(document).ready(function(){
 	}
 
 
+
 	function closeAppointment() {
-
-		//Hide the Appointment
-
-		//Clear appointment data
-		
+		$("#calendar-details").addClass("swing-out-left-bck");
+		var appointmentContent = $("#calendar-details__textarea").text("");
 	}
 
 
 
 	//Hide appointment
-	$("#hideDetail").click(function(){
-		$("#calendar-details").addClass("swing-out-left-bck");
-	});
+
 
 	//Remove appointment
 	$("#removeAppointment").click(function(){
