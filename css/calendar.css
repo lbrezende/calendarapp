@@ -178,20 +178,9 @@ td.calendar__days--selected {
 	padding: 2px;
 }
 
-td.calendar__days--othermonth {
-	color: rgba(192, 192, 207, 0.2);
-}
-
-td.calendar__days--othermonth:hover {
-	color: #3123BD;
-    -webkit-transition: all 0.1s ease-in-out;
-    -moz-transition: all 0.1s ease-in-out;
-    -o-transition: all 0.1s ease-in-out;
-    transition: all 0.1s ease-in-out;
-
-}
 
 td.calendar__days--beforetoday {
+	color: rgba(192, 192, 207, 0.2);
 	cursor: not-allowed;
 }
 
