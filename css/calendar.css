@@ -59,16 +59,55 @@ table {
 }
 
 /*****************************************************************
-Calendar block
+Instruction elements and page structure
 ******************************************************************/
 
 body {
-	color: #3C3E42;
-	font-size: 16px;
+	font-size: 1em;
 	font-family: 'Roboto', sans-serif;
+	color: #3C3E42;
+	line-height: 1.2em;
 }
 
+h1 {
+	font-size: 2em;
+	margin-bottom: 20px
+}
+ 
+p, ul {
+	font-size: 1em;
+	margin-bottom: 20px;
+}
+
+li {
+	list-style: circle;
+	margin-left: 20px;
+}
+
+.container {
+	max-width: 1200px;
+	margin: 0 auto;
+}
+
+.instructions {
+	color: #F2F1FF;
+	background: #3123BD;
+	padding: 20px;
+	margin: 20px 0px;
+}
+
+/*****************************************************************
+Calendar block
+******************************************************************/
+
+
 .calendar {
+	font-size: 1em;
+	font-weight: 300;
+	color: #3C3E42;
+	background: #FCFCFF;
+	line-height: 1em;
+	box-shadow: 1px 1px 4px rgba(0,0,0,0.1);
 }
 
 /* Calendar Title */
@@ -78,28 +117,97 @@ body {
 
 .calendar__title-currentmonth {
     color: #3123BD;
+    background: #FCFCFF;
     font-size: 1.5em;
+    line-height: 1.5em;
+    text-align: center;
+    font-weight: 400;
+    padding: 8px;
 }
 
-.calendar__title-daysofweek {
+
+.calendar__title-daysofweek td {
+    color: #ACAEC4;
+    background: #FCFCFF;
+    font-size: 1em;
+    line-height: 1em;
+    text-align: center;
+    padding: 8px;
+    border-bottom: 1px solid rgba(192, 192, 207, 0.2);
 }
 
 /* Calendar Days */
 
-.calendar__days {
+.calendar__days td {
+	text-align: center;
+	padding: 16px;
+	border-radius: 50%;
+	cursor: pointer;
+	border-bottom: 2px solid #FCFCFF;
 }
 
-.calendar__days--current {
+.calendar__days td:hover {
+	background: rgba(49, 35, 189, 0.1);
+	color: #3123BD;
+	padding: 2px;
+	border-radius: 50%;
+    -webkit-transition: all 0.1s ease-in-out;
+    -moz-transition: all 0.1s ease-in-out;
+    -o-transition: all 0.1s ease-in-out;
+    transition: all 0.1s ease-in-out;
 }
 
-.calendar__days--selected {
+td.calendar__days--current {
+	background: #3123BD;
+	color: #F2F1FF;
+	padding: 2px;
 }
 
-.calendar__days--othermonth {
+td.calendar__days--current:hover {
+	background: #1d1475;
+	color: #F2F1FF;
+    -webkit-transition: all 0.1s ease-in-out;
+    -moz-transition: all 0.1s ease-in-out;
+    -o-transition: all 0.1s ease-in-out;
+    transition: all 0.1s ease-in-out;
 }
 
-.calendar__days--weekend {
+td.calendar__days--selected {
+	background: rgba(49, 35, 189, 0.1);
+	color: #3123BD;
+	padding: 2px;
 }
 
-.calendar__days--appointment {
+td.calendar__days--othermonth {
+	color: rgba(192, 192, 207, 0.2);
+}
+
+td.calendar__days--othermonth:hover {
+	color: #3123BD;
+    -webkit-transition: all 0.1s ease-in-out;
+    -moz-transition: all 0.1s ease-in-out;
+    -o-transition: all 0.1s ease-in-out;
+    transition: all 0.1s ease-in-out;
+
+}
+
+td.calendar__days--beforetoday {
+	cursor: not-allowed;
+}
+
+td.calendar__days--beforetoday:hover {
+	background: #FCFCFF;
+	cursor: not-allowed;
+    -webkit-transition: none;
+    -moz-transition: none;
+    -o-transition: none;
+    transition: none;
+}
+
+td.calendar__days--weekend {
+	color: #C0C0CF;
+}
+
+td.calendar__days--appointment {
+	border-bottom: 2px solid #FED341;
 }

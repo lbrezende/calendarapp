@@ -4,7 +4,7 @@
 		<meta charset="utf-8">
 		<title>Calendar App</title>
 		<link rel="stylesheet" href="css/calendar.css">
-		<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Roboto:300,400" rel="stylesheet">
 	</head>
 	<body>
 		<script src="js/calendar.js"></script>
@@ -12,40 +12,45 @@
 </html>
 
 
-<div aria-label="Question Content" class="challenge-text hrx-version ck_table-wrap fadeinContent" style="min-height:100px;"><p>Make a <em>calendar app</em>. The calendar should display all the dates for the current month. The calendar app should also be able to mark appointments. The app must have the following functionality:</p>
+<div class="container">
+	<div class="instructions">
+		<h1>Instructions</h1>
 
-<ul>
-	<li>Any appointment can be made for the current day or for a future date.</li>
-	<li>No two appointments should overlap. If an&nbsp;appointment already&nbsp;exists for a day, a warning should be shown.</li>
-	<li>Appointments can be edited and deleted.</li>
-</ul>
-</div>
+		<p>Make a <em>calendar app</em>. The calendar should display all the dates for the current month. The calendar app should also be able to mark appointments. The app must have the following functionality:</p>
+
+		<ul>
+			<li>Any appointment can be made for the current day or for a future date.</li>
+			<li>No two appointments should overlap. If an&nbsp;appointment already&nbsp;exists for a day, a warning should be shown.</li>
+			<li>Appointments can be edited and deleted.</li>
+		</ul>
+	</div>
+
 
 
 <table class="calendar">
-	<thead class="calendar__title-currentmonth">
-		<th colspan="7">February 2019</th>
+	<thead>
+		<th class="calendar__title-currentmonth" colspan="7">February 2019</th>
 	</thead>
 	<tbody>
 		<tr class="calendar__title-daysofweek">
-			<td>sun</td>
-			<td>mon</td>
-			<td>tue</td>
-			<td>wed</td>
-			<td>thu</td>
-			<td>fri</td>
-			<td>sat</td>
+			<td>Sun</td>
+			<td>Mon</td>
+			<td>Tue</td>
+			<td>Wed</td>
+			<td>Thu</td>
+			<td>Fri</td>
+			<td>Sat</td>
 		</tr>	
 		<tr class="calendar__days">
-			<td class="calendar__days--othermonth">27</td>
-			<td class="calendar__days--othermonth">28</td>
-			<td class="calendar__days--othermonth">29</td>
-			<td class="calendar__days--othermonth">30</td>
-			<td class="calendar__days--othermonth">31</td>
-			<td>1</td>
+			<td class="calendar__days--othermonth calendar__days--beforetoday">27</td>
+			<td class="calendar__days--othermonth calendar__days--beforetoday">28</td>
+			<td class="calendar__days--othermonth calendar__days--beforetoday">29</td>
+			<td class="calendar__days--othermonth calendar__days--beforetoday">30</td>
+			<td class="calendar__days--othermonth calendar__days--beforetoday">31</td>
+			<td class="calendar__days--beforetoday">1</td>
 			<td class="calendar__days--weekend calendar__days--current">2</td>
 		</tr>	
-		<tr>
+		<tr class="calendar__days">
 			<td class="calendar__days--weekend">3</td>
 			<td class="calendar__days--appointment">4</td>
 			<td>5</td>
@@ -54,7 +59,7 @@
 			<td>8</td>
 			<td class="calendar__days--weekend">9</td>
 		</tr>	
-		<tr>
+		<tr class="calendar__days">
 			<td class="calendar__days--weekend">10</td>
 			<td>11</td>
 			<td>12</td>
@@ -63,7 +68,7 @@
 			<td>15</td>
 			<td class="calendar__days--weekend">16</td>
 		</tr>	
-		<tr>
+		<tr class="calendar__days">
 			<td class="calendar__days--weekend">17</td>
 			<td>18</td>
 			<td>19</td>
@@ -72,7 +77,7 @@
 			<td>22</td>
 			<td class="calendar__days--weekend">23</td>
 		</tr>	
-		<tr>
+		<tr class="calendar__days">
 			<td class="calendar__days--weekend">24</td>
 			<td>25</td>
 			<td>26</td>
@@ -83,3 +88,5 @@
 		</tr>
 	</tbody>
 </table>
+
+</div>
