@@ -5,7 +5,92 @@ $(document).ready(function(){
 	initializeCalendar();
 	initializeCalendarDetails();
 
-	$("#calendar-details").slideToggle();
+	//it is called whenever the user clicks a date today or in the future
+	function openAppointment() {
+		//Get the json file
+
+		//Verify if the date has any text
+
+		//If has text, show the data
+
+		//If does not have text shows emptytextareabuttons
+	}
+
+	//it is called if the user clicks #addAppointment and text area is not empty
+	function addAppointment() {
+
+		//Get the text area #calendar-details__textarea text and add to a json file
+
+		//Add date css mark .slide-out-elliptic-top-bck
+
+		//calls function closeAppointment
+
+	}
+
+	//it is called when the user clicks the #removeAppointment button
+	function removeAppointment() {
+
+		//remove data from json to the select data
+
+		//clear the textarea
+
+		//add class .swing-out-left-bck 
+		
+	}
+
+	//it is called when the user clicks #updateAppointment update button and text area is not empty
+	function updateAppointment() {
+
+		//Get the text area #calendar-details__textarea text and add to a json file
+
+		//Add date css mark .calendar__days--appointment
+
+		//calls function closeAppointment
+		
+	}
+
+
+	function closeAppointment() {
+
+		//Hide the Appointment
+
+		//Clear appointment data
+		
+	}
+
+
+
+	//Hide appointment
+	$("#hideDetail").click(function(){
+		$("#calendar-details").addClass("swing-out-left-bck");
+	});
+
+	//Remove appointment
+	$("#removeAppointment").click(function(){
+		$("#calendar-details").addClass("slide-out-elliptic-top-bck");
+	});
+
+	//Open appointment
+	$(".calendar__days td").click(function(){
+
+		if ((!$(this).hasClass("calendar__days--selected")) && (!$(this).hasClass("calendar__days--beforetoday"))){
+			$("#calendar-details").removeClass("swing-out-left-bck");
+			$("#calendar-details").removeClass("slide-out-elliptic-top-bck");
+			$("#calendar-details").removeClass("swing-in-left-fwd");
+			$("#calendar-details").hide();
+
+			thisDay = $(this).attr("day");
+			thisMonth = $(this).attr("month");
+			$("#currentMonthSmall").html(monthNamesSmall[thisMonth-1]);
+			$("#calendar-details").show();
+			$("#calendar-details").addClass("swing-in-left-fwd");
+			$("#currentDay").html(thisDay);
+
+			$(".calendar__days td").removeClass("calendar__days--selected");
+			$(this).addClass("calendar__days--selected");
+		};
+	});
+	
 
 
 
@@ -38,8 +123,8 @@ $(document).ready(function(){
 
 		//Date helpers
 		dayPerMonth = ["31", ""+FebruaryNumberOfDays+"","31","30","31","30","31","31","30","31","30","31"];
-		const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-		const monthNamesSmall = ["Jan", "Feb", "March", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+		monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+		monthNamesSmall = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
 		currentMonthName = monthNames[month];
 		currentMonthNameMMM= monthNamesSmall[month];
@@ -130,7 +215,7 @@ $(document).ready(function(){
 	function initializeCalendarDetails() {
 		//Adds the calendar header to the HTML variable
 
-		var calendarDetailsHTML = "<div id=\"calendar-details\" style=\"display:none\"><div class=\"calendar-details__title\"><span id=\"currentMonthSmall\">"+currentMonthNameMMM+"</span>, <span id=\"currentDay\">"+currentDayDD+"<span></div><div class=\"calendar-details__subject--header\">Your appointment</div><div class=\"calendar-details__subject\"><textarea id=\"calendar-details__textarea\" type=\"text\" name=\"subject\" placeholder=\"Type the subject...\"></textarea><button id=\"calendar-details__button-primary\" onclick=\"removeAppointment();\">Remove appointment</button></div></div>";
+		var calendarDetailsHTML = "<div id=\"calendar-details\" style=\"display:none\"><div class=\"calendar-details__title\"><span id=\"currentMonthSmall\">"+currentMonthNameMMM+"</span>, <span id=\"currentDay\">"+currentDayDD+"</span><span id=\"hideDetail\" style=\"float:right; cursor:pointer\">x</span></div><div class=\"calendar-details__subject--header\">Your appointment</div><div class=\"calendar-details__subject\"><textarea id=\"calendar-details__textarea\" type=\"text\" name=\"subject\" placeholder=\"Type the subject...\"></textarea><div class=\"emptyTextAreaButtons\"><button id=\"updateAppointment\" class=\"calendar-details__button-primary\" onclick=\"updateAppointment();\">Update </button><button id=\"removeAppointment\" class=\"calendar-details__button-primary\" onclick=\"removeAppointment();\">Remove </button></div><div class=\"filledTextAreaButtons\"><button id=\"addAppointment\" class=\"calendar-details__button-primary\" onclick=\"addAppointment();\">Add appointment</button></div></div></div>";
 
 		$("#calendarDetailsArea").html(calendarDetailsHTML);
 
