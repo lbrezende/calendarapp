@@ -11,22 +11,23 @@ $(document).ready(function(){
 
 				/* If the date is free, the user can mark an appointment */
 				if(!dateHasAppointment(selectedDate)) {
-					markAppointment(selectedDate);
-				} else {
-					/* If the date is not free, the user can open and the appointment */
-					openAppointment(selectedDate);
-					/* After seeing the appointment, the user can decide if he wants to clear the agenda or update */
-	
-					appointmentDay = 15;
+					appointmentDay = selectedDate.text();
 					appointmentMonth = 02;
 					appointmentYear = 2019;
 					appointmentDate = appointmentMonth + "/" + appointmentDay + "/" + appointmentYear;
+					markAppointment(selectedDate, appointmentDay, appointmentMonth, appointmentYear, appointmentDate);
+				} else {
+					/* If the date is not free, the user can open and the appointment */
+					openAppointment(selectedDate, appointmentDay, appointmentMonth, appointmentYear, appointmentDate);
+					/* After seeing the appointment, the user can decide if he wants to clear the agenda or update */
+	
+
 
 					clearAgenda = confirm("Do you want to clear your agenda for " + appointmentDate + " ?");
 
 					if (clearAgenda) {
 						/*Removes the appointment */
-						removeAppointment(selectedDate);
+						removeAppointment(selectedDate, appointmentDay, appointmentMonth, appointmentYear, appointmentDate);
 
 					} else {
 
@@ -34,7 +35,7 @@ $(document).ready(function(){
 
 						if (updateAgenda) {
 							/*Update the appointment */
-							updateAppointment(selectedDate);
+							updateAppointment(selectedDate, appointmentDay, appointmentMonth, appointmentYear, appointmentDate);
 						}
 					}
 				}
@@ -66,7 +67,7 @@ $(document).ready(function(){
 	/* 
 	   openAppointment asks the user the subject of the appointment and mark
 	*/
-	function openAppointment(selectedDate) {
+	function openAppointment(selectedDate, appointmentDay, appointmentMonth, appointmentYear, appointmentDate) {
 
 		/* Show the user his appointment */
 		appointmentSubject = selectedDate.attr( "data-appointment" );
@@ -77,14 +78,14 @@ $(document).ready(function(){
 	/* 
 	   markAppointment adds an appointment to the selected date
 	*/
-	function markAppointment(selectedDate) {
+	function markAppointment(selectedDate, appointmentDay, appointmentMonth, appointmentYear, appointmentDate) {
 
 		var subject = prompt("What is your appointment subject");
 
 		if (subject != null) {
 		    selectedDate.attr('data-appointment', subject);
 			/*Add the appointment class*/
-			alert("Your appointment '" + subject + "' is market")
+			alert("Your appointment '" + subject + "' is marked")
 			selectedDate.addClass("calendar__days--appointment");
 		} else {
 			/*if the user refuses to define the subject, the agenda must remain clear */
@@ -96,7 +97,7 @@ $(document).ready(function(){
 	/* 
 	   removeAppointment remove the appointment in the selected date and feedback the user
 	*/
-	function removeAppointment(selectedDate) {
+	function removeAppointment(selectedDate, appointmentDay, appointmentMonth, appointmentYear, appointmentDate) {
 
 		/* Asks if the user wants to remove the appointment. If yes, remove and feedback the user. */
 		appointmentDay = 15;
@@ -120,7 +121,7 @@ $(document).ready(function(){
 	/* 
 	   updateAppointment remove the appointment in the selected date and feedback the user
 	*/
-	function updateAppointment(selectedDate) {
+	function updateAppointment(selectedDate, appointmentDay, appointmentMonth, appointmentYear, appointmentDate) {
 
 		/* Asks if the user wants to remove the appointment. If yes, remove and feedback the user. */
 		appointmentDay = 15;
