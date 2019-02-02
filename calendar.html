@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en" data-framework="javascript">
+	<head>
+		<meta charset="utf-8">
+		<title>Calendar App</title>
+		<link rel="stylesheet" href="css/calendar.css">
+		<link href="https://fonts.googleapis.com/css?family=Roboto:300,400" rel="stylesheet">
+	</head>
+	<body>
+
+		<table id="calendar">
+			<thead class="calendar__title">
+				<th class="calendar__title--currentmonth" colspan="7"><span id="thisMonth">February</span> <span id="thisYear">2019<span></th>
+			</thead>
+			<tbody>
+				<tr class="calendar__title--daysofweek">
+					<td>Sun</td>
+					<td>Mon</td>
+					<td>Tue</td>
+					<td>Wed</td>
+					<td>Thu</td>
+					<td>Fri</td>
+					<td>Sat</td>
+				</tr>	
+				<tr class="calendar__days">
+					<td id="01272019" class="calendar__days--beforetoday">27</td>
+					<td id="01282019" class="calendar__days--beforetoday">28</td>
+					<td id="01292019" class="calendar__days--beforetoday">29</td>
+					<td id="01302019" class="calendar__days--beforetoday">30</td>
+					<td id="01312019" class="calendar__days--beforetoday">31</td>
+					<td id="02012019" class="calendar__days--beforetoday">1</td>
+					<td id="02022019" class="calendar__days--beforetoday">2</td>
+				</tr>	
+				<tr class="calendar__days">
+					<td id="02032019" class="calendar__days--beforetoday">3</td>
+					<td id="02042019" class="calendar__days--appointment calendar__days--current"  data-appointment="Netflix and Chill">4</td>
+					<td id="02052019">5</td>
+					<td id="02062019">6</td>
+					<td id="02072019">7</td>
+					<td id="02082019">8</td>
+					<td id="02092019" class="calendar__days--weekend">9</td>
+				</tr>	
+				<tr class="calendar__days">
+					<td id="02102019" class="calendar__days--weekend">10</td>
+					<td id="02112019">11</td>
+					<td id="02122019">12</td>
+					<td id="02132019" class="calendar__days--appointment" data-appointment="Verify if Han Solo shoted first">13</td>
+					<td id="02142019">14</td>
+					<td id="02152019">15</td>
+					<td id="02162019" class="calendar__days--weekend">16</td>
+				</tr>	
+				<tr class="calendar__days">
+					<td id="02172019" class="calendar__days--weekend">17</td>
+					<td id="02182019">18</td>
+					<td id="02192019">19</td>
+					<td id="02202019" class="calendar__days--appointment" data-appointment="Party hard and go crazy">20</td>
+					<td id="02212019">21</td>
+					<td id="02222019">22</td>
+					<td id="02232019" class="calendar__days--weekend">23</td>
+				</tr>	
+				<tr class="calendar__days">
+					<td id="02242019" class="calendar__days--weekend">24</td>
+					<td id="02252019">25</td>
+					<td id="02262019">26</td>
+					<td id="02272019">27</td>
+					<td id="02282019">28</td>
+					<td id="02012019">1</td>
+					<td id="02022019">2</td>
+				</tr>
+			</tbody>
+		</table>
+
+		
+		<div id="calendar-details">
+			<div class="calendar-details__title">
+				<span id="currentMonthSmall">Feb</span>, <span id="currentDay">04<span>
+			</div>
+			<div class="calendar-details__subject--header">
+				Your appointment
+			</div>
+			<div class="calendar-details__subject">
+				<textarea id="calendar-details__textarea" type="text" name="subject" placeholder="Type the subject..."></textarea>
+				<button id="calendar-details__button-primary" onclick="removeAppointment();">Remove appointment</button>
+			</div>
+		</div>
+
+
+
+	</body>
+</html>
+
+
