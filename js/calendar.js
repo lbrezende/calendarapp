@@ -43,18 +43,21 @@ $(document).ready(function(){
 		//actions when clicks any day
 		$(".calendar__days td").click(function(){
 			openAppointment($(this));
+			//console.log("remove: "+JSON.stringify(appointments));
 		});
 
 		//actions when clicks addAppointment
 		$("#addAppointment").click(function(){
 			addAppointment($(this))
 			closeAppointment()
+			//console.log("remove: "+JSON.stringify(appointments));
 		});
 
 		//actions when clicks updateAppointment
 		$("#updateAppointment").click(function(){
 			updateAppointment($(this))
 			closeAppointment()
+			//console.log("remove: "+JSON.stringify(appointments));
 		});
 
 		//updates appointment if blur text area
@@ -89,14 +92,16 @@ $(document).ready(function(){
 			id = $(this).attr("id");
 			subject = getSubject(id);
 
-			//If the day has a subject, draw appointment
+			//If the day has a subject, draw appointment or remove the signals at the date
 			if ((subject != "" )) {
-				console.log(">>> add" + id + " com subject: " + subject);
+				//console.log(">>> add" + id + " com subject: " + subject);
 				$(this).addClass("calendar__days--appointment");
 			} else {
-				console.log("não add" + id + " com subject: " + subject);
+				//console.log("não add" + id + " com subject: " + subject);
 				$(this).removeClass("calendar__days--appointment");
 			}
+
+			//Removes selected data on the calendar
 			$(this).removeClass("calendar__days--selected");
 
 	    });
@@ -178,9 +183,8 @@ $(document).ready(function(){
 */
 	function addAppointment(dateObject) {
 
-		//Get the text area #calendar-details__textarea 
+		//Get the text in the textarea and adds to json 
 		id = dateObject.attr("date");
-
 		var subject = $("#calendar-details__textarea").val();
 		setSubject(id, subject);
 
@@ -189,7 +193,12 @@ $(document).ready(function(){
 
 	}
 
-	//it is called when the user clicks the #removeAppointment button
+/* 
+   removeAppointment
+   This function is called if the user clicks #removeAppointment and removes the subject
+   Author: Leandro Rezende
+   Feb 2 2019
+*/
 	function removeAppointment(dateObject) {
 
 		//Get the text area #calendar-details__textarea 
@@ -199,11 +208,16 @@ $(document).ready(function(){
 		//Creates animation to feedback user the appointment has gonne
 		$("#calendar-details").addClass("slide-out-elliptic-top-bck");
 
-	
 		//Calls the functions that reads the apointmnets and draw in the calendar
 		drawCalendarAppointments();
 	}
 
+/* 
+   updateAppointment
+   This function is called if the user clicks #updateAppointment and updates the subject
+   Author: Leandro Rezende
+   Feb 2 2019
+*/
 	//it is called when the user clicks #updateAppointment update button and text area is not empty
 	function updateAppointment(dateObject) {
 
@@ -217,12 +231,24 @@ $(document).ready(function(){
 		
 	}
 
+/* 
+   closeAppointment
+   This function is called after all actions in the calendar details to close the box
+   Author: Leandro Rezende
+   Feb 2 2019
+*/
 	function closeAppointment() {
 		$("#calendar-details").addClass("swing-out-left-bck");
 		var appointmentContent = $("#calendar-details__textarea").text("");
 	}
 
-	/*Date helpers with important numbers to generate the calendar such as current object, and other presentation forms*/
+/* 
+   initializeDates
+   This function makes the math magic. February number of the days, number of days in the month
+   and simliar stuff
+   Author: Leandro Rezende
+   Feb 2 2019
+*/
 	function initializeDates(){
 
 		/* Current Date*/
@@ -265,7 +291,12 @@ $(document).ready(function(){
  		weekdays= nextDate.getDay();
 	}
 
-	//Creates the calendar
+/* 
+   initializeCalendar
+   This function creates the calendar HTML. Some math magic. It works, don't ask me how. Should clearly be refactored, but it is cool for now. Works. Yeah baby! Works. Can you make it better? Go for it! I won't be sad and I will pay you a coke
+   Author: Leandro Rezende
+   Feb 2 2019
+*/
 	function initializeCalendar() {
 		//Adds the calendar header to the HTML variable
 		var calendarHTML = "<table id=\"calendar\"><thead class=\"calendar__title\"><th class=\"calendar__title--currentmonth\" colspan=\"7\"><span id=\"thisMonth\">"+ currentMonthName +"</span> <span id=\"thisYear\">"+ currentYearYYYY +"<span></th></thead><tbody><tr class=\"calendar__title--daysofweek\"><td>Sun</td><td>Mon</td><td>Tue</td><td>Wed</td><td>Thu</td><td>Fri</td><td>Sat</td></tr>";
@@ -320,7 +351,6 @@ $(document).ready(function(){
 							}
 							counter++;
 							dayCounter++;
-
 							
 					 }
 
@@ -337,7 +367,12 @@ $(document).ready(function(){
 		$("#calendarArea").html(calendarHTML);
 	}
 
-	//Creates the calendar detais
+/* 
+   initializeCalendarDetails
+   This function is called if the user clicks #removeAppointment and removes the subject
+   Author: Leandro Rezende
+   Feb 2 2019
+*/
 	function initializeCalendarDetails() {
 		//Adds the calendar header to the HTML variable
 
@@ -346,6 +381,12 @@ $(document).ready(function(){
 		$("#calendarDetailsArea").html(calendarDetailsHTML);
 	}
 
+/* 
+   createData
+   Creates Json object with all days subject empty
+   Author: Leandro Rezende
+   Feb 2 2019
+*/
 	function createData() {
 	    appointments = [];
 	    $(".calendar__days td").each(function() {
@@ -363,10 +404,15 @@ $(document).ready(function(){
 	    
 	}
 
+
+/* 
+   setSubject
+   Writes a new subject for a defined day
+   Author: Leandro Rezende
+   Feb 2 2019
+*/
 	function setSubject(identifier, subject) {
-
 	  for (var i = 0; i < appointments.length; i++) {
-
 	  	//Finds the object with the same id and updates the subject
 	    if (appointments[i].id === identifier) {
 	      appointments[i].subject = subject;
@@ -375,10 +421,14 @@ $(document).ready(function(){
 	  }
 	}
 
+/* 
+   removeSubject
+   Updates the subject with empty state
+   Author: Leandro Rezende
+   Feb 2 2019
+*/
 	function removeSubject(identifier) {
-
 	  for (var i = 0; i < appointments.length; i++) {
-
 	  	//Finds the object with the same id and updates the subject
 	    if (appointments[i].id === identifier) {
 	      appointments[i].subject = "";
@@ -387,17 +437,30 @@ $(document).ready(function(){
 	  }
 	}
 
+/* 
+   getSubject
+   Returns the subject for a defined id
+   Author: Leandro Rezende
+   Feb 2 2019
+*/
 	function getSubject(identifier) {
 
 	  for (var i = 0; i < appointments.length; i++) {
-
 	  	//Finds the object with the same id and updates the subject
 	    if (appointments[i].id === identifier) {
 	      return appointments[i].subject;
 	    }
 	  }
-
 	}
 
 
 });
+
+/*****************************************************************
+Thanks for reading! I am available to work abroad. 
+
+This is not an amazing javascript. Not great archtecture... 
+but I rock as UX & UI Designer and Product Management!
+
+Find me at lbrezende@gmail.com
+****************************************************************/

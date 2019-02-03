@@ -190,6 +190,23 @@ Calendar block
     color: rgba(242,241,255,0.32);
 }
 
+/*****************************************************************
+Main action buttons
+******************************************************************/
+
+.calendar-details__button-primary {
+	font-size:16px;
+    background-color: #FFFr;
+    color: #3123BD;
+    padding: 16px;
+    width: 100%;
+    margin-left: 5 auto;
+    border: none;
+    box-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+    cursor: pointer;
+    outline: none;
+}
+
 .filledTextAreaButtons {
 
 }
@@ -205,7 +222,6 @@ Calendar block
 
 }
 
-
 .emptyTextAreaButtons {
 
 	display:none;
@@ -213,19 +229,6 @@ Calendar block
 }
 #addAppointment {
 
-}
-
-.calendar-details__button-primary {
-	font-size:16px;
-    background-color: #FFFr;
-    color: #3123BD;
-    padding: 16px;
-    width: 100%;
-    margin-left: 5 auto;
-    border: none;
-    box-shadow: 2px 2px 4px rgba(0,0,0,0.1);
-    cursor: pointer;
-    outline: none;
 }
 
 .calendar-details__button-primary:hover {
@@ -239,7 +242,9 @@ Calendar block
 
 
 
-/* Calendar Days */
+/*****************************************************************
+Calendar days
+******************************************************************/
 
 .calendar__days td {
 	text-align: center;
