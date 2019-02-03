@@ -1,21 +1,37 @@
 $(document).ready(function(){
 
-
-	initializeDates();
-	initializeCalendar();
-	initializeCalendarDetails();
 	initializeEventListeners();
 
+	function initializeEventListeners() {
 
-	function eventListeners() {
+		initializeDates();
+		initializeCalendar();
+		initializeCalendarDetails();
+		createData();
+		initializeCalendarAppointments();
+
 
 		//when clicks any day
+		$(".calendar__days td").click(function(){
+			openAppointment($(this));
+		});
 
 		//when clicks addAppointment
-
-		//when clicks removeAppointment
+		$("#addAppointment").click(function(){
+			addAppointment($(this))
+			closeAppointment()
+		});
 
 		//when clicks updateAppointment
+		$("#updateAppointment").click(function(){
+			updateAppointment($(this))
+			closeAppointment()
+		});
+
+		//when clicks removeAppointment
+		$("#removeAppointment").click(function(){
+			removeAppointment($(this))
+		});
 
 		//when clicks the close button
 		$("#hideDetail").click(function(){
@@ -23,22 +39,80 @@ $(document).ready(function(){
 		});
 	}
 
-
+	function initializeCalendarAppointments() {
+			$(".calendar__days td").each(function() {
+				var appointment = $.map(appointments, function(appointment) {
+					    if(appointment.id === $(this).attr("id")){
+					    	return appointment;		    
+					    }
+					});
+		    	var subject = appointments[0]["subject"];
+				if (subject != "") {
+					$(this).addClass("calendar__days--appointment");
+				}
+		    });
+	}
 
 	//it is called whenever the user clicks a date today or in the future
-	function openAppointment(day, month, year) {
-		//Get the json file
+	function openAppointment(dateObject) {
 
-		//Verify if the date has any text
+		$(".filledTextAreaButtons").show();
+		$(".emptyTextAreaButtons").show();
 
-		//If has text, show the data
+		if ((!dateObject.hasClass("calendar__days--selected")) && (!dateObject.hasClass("calendar__days--beforetoday"))){
+
+			//Adding a Id to the main buttons
+			$("#removeAppointment").attr("date", dateObject.attr("id"));
+			$("#updateAppointment").attr("date", dateObject.attr("id"));
+			$("#addppointment").attr("date", dateObject.attr("id"));
+
+			//getting object in json file
+			var appointment = $.map(appointments, function(appointment) {
+			    if(appointment.id === dateObject.attr("id")){
+			    	return appointment;		    
+			    }
+			});
+
+	    	var subject = appointment[0]["subject"];
+	    	var day = appointment[0]["day"];
+	    	var month = appointment[0]["month"];
+	    	var monthNameMM = monthNamesSmall[month-1];
+
+	    	//animations to reset the interface
+			$("#calendar-details").removeClass("swing-out-left-bck");
+			$("#calendar-details").removeClass("slide-out-elliptic-top-bck");
+			$("#calendar-details").removeClass("swing-in-left-fwd");
+			$("#calendar-details").hide();
+
+			//rendering new interface information
+			$("#currentMonthSmall").html(monthNameMM);
+			$("#calendar-details").show();
+			$("#calendar-details").addClass("swing-in-left-fwd");
+			$("#currentDay").html(day);
+
+			$("#calendar-details__textarea").text(subject);
+
+			if (subject == "") {
+				$(".emptyTextAreaButtons").hide();
+				$(".filledTextAreaButtons").show();
+			} else {
+				$(".emptyTextAreaButtons").show();
+				$(".filledTextAreaButtons").hide();
+			}
+
+			//selecting day on the calendar
+			$(".calendar__days td").removeClass("calendar__days--selected");
+			$(this).addClass("calendar__days--selected");
+		};
+
 
 		//If does not have text shows emptytextareabuttons
 	}
 
 	//it is called if the user clicks #addAppointment and text area is not empty
-	function addAppointment(day, month, year) {
+	function addAppointment(dateObject) {
 
+		alert("add");
 		//Get the text area #calendar-details__textarea 
 
 		var appointmentContent = $("#calendar-details__textarea").text();
@@ -53,19 +127,26 @@ $(document).ready(function(){
 	}
 
 	//it is called when the user clicks the #removeAppointment button
-	function removeAppointment(day, month, year) {
+	function removeAppointment(dateObject) {
 
-		//remove data from json to the select data
+		// getting object in json file
+		// var appointment = $.map(appointments, function(appointment) {
+		//     if(appointment.id === dateObject.attr("date")){ 
+		//     	console.log(appointment);
+		//     	appointment["subject"] == "nicetry";
+		//     	alert(appointment["subject"]);
+		//     }
+		// });
 
-		//clear the textarea
-
-		//add class .swing-out-left-bck 
+		dateObject.removeClass("calendar__days--appointment");
+		$("#calendar-details__textarea").text("");
+		$("#calendar-details").addClass("slide-out-elliptic-top-bck");
 		
 	}
 
 	//it is called when the user clicks #updateAppointment update button and text area is not empty
-	function updateAppointment(day, month, year) {
-
+	function updateAppointment(dateObject) {
+		alert("update");
 		//Get the text area #calendar-details__textarea text and add to a json file
 
 		//Add date css mark .calendar__days--appointment
@@ -74,48 +155,13 @@ $(document).ready(function(){
 		
 	}
 
-
-
 	function closeAppointment() {
 		$("#calendar-details").addClass("swing-out-left-bck");
 		var appointmentContent = $("#calendar-details__textarea").text("");
 	}
 
 
-
-	//Hide appointment
-
-
-	//Remove appointment
-	$("#removeAppointment").click(function(){
-		$("#calendar-details").addClass("slide-out-elliptic-top-bck");
-	});
-
-	//Open appointment
-	$(".calendar__days td").click(function(){
-
-		if ((!$(this).hasClass("calendar__days--selected")) && (!$(this).hasClass("calendar__days--beforetoday"))){
-			$("#calendar-details").removeClass("swing-out-left-bck");
-			$("#calendar-details").removeClass("slide-out-elliptic-top-bck");
-			$("#calendar-details").removeClass("swing-in-left-fwd");
-			$("#calendar-details").hide();
-
-			thisDay = $(this).attr("day");
-			thisMonth = $(this).attr("month");
-			$("#currentMonthSmall").html(monthNamesSmall[thisMonth-1]);
-			$("#calendar-details").show();
-			$("#calendar-details").addClass("swing-in-left-fwd");
-			$("#currentDay").html(thisDay);
-
-			$(".calendar__days td").removeClass("calendar__days--selected");
-			$(this).addClass("calendar__days--selected");
-		};
-	});
-	
-
-
-
-	/*Date helpers with important numbers to generate the calendar such as current day, month, year, and other presentation forms*/
+	/*Date helpers with important numbers to generate the calendar such as current object, and other presentation forms*/
 	function initializeDates(){
 
 		/* Current Date*/
@@ -236,11 +282,33 @@ $(document).ready(function(){
 	function initializeCalendarDetails() {
 		//Adds the calendar header to the HTML variable
 
-		var calendarDetailsHTML = "<div id=\"calendar-details\" style=\"display:none\"><div class=\"calendar-details__title\"><span id=\"currentMonthSmall\">"+currentMonthNameMMM+"</span>, <span id=\"currentDay\">"+currentDayDD+"</span><span id=\"hideDetail\" style=\"float:right; cursor:pointer\">x</span></div><div class=\"calendar-details__subject--header\">Your appointment</div><div class=\"calendar-details__subject\"><textarea id=\"calendar-details__textarea\" type=\"text\" name=\"subject\" placeholder=\"Type the subject...\"></textarea><div class=\"emptyTextAreaButtons\"><button id=\"updateAppointment\" class=\"calendar-details__button-primary\" onclick=\"updateAppointment();\">Update </button><button id=\"removeAppointment\" class=\"calendar-details__button-primary\" onclick=\"removeAppointment();\">Remove </button></div><div class=\"filledTextAreaButtons\"><button id=\"addAppointment\" class=\"calendar-details__button-primary\" onclick=\"addAppointment();\">Add appointment</button></div></div></div>";
+		var calendarDetailsHTML = "<div id=\"calendar-details\" style=\"display:none\"><div class=\"calendar-details__title\"><span id=\"currentMonthSmall\">"+currentMonthNameMMM+"</span>, <span id=\"currentDay\">"+currentDayDD+"</span><span id=\"hideDetail\" style=\"float:right; cursor:pointer\">x</span></div><div class=\"calendar-details__subject--header\">Your appointment</div><div class=\"calendar-details__subject\"><textarea id=\"calendar-details__textarea\" type=\"text\" name=\"subject\" placeholder=\"Type the subject...\"></textarea><div class=\"emptyTextAreaButtons\"><button id=\"updateAppointment\" class=\"calendar-details__button-primary\" >Update </button><button id=\"removeAppointment\" class=\"calendar-details__button-primary\">Remove </button></div><div class=\"filledTextAreaButtons\"><button id=\"addAppointment\" class=\"calendar-details__button-primary\">Add appointment</button></div></div></div>";
 
 		$("#calendarDetailsArea").html(calendarDetailsHTML);
 
 	}
+
+	function createData() {
+	    appointments = [];
+	    $(".calendar__days td").each(function() {
+
+	    	if ($(this).attr("id")) {
+		        appointment = {}
+		        appointment ["day"] = $(this).attr("day");
+		        appointment ["month"] = $(this).attr("month");
+		        appointment ["year"] = $(this).attr("year");
+		        appointment ["subject"] = "";
+		        appointment ["id"] = $(this).attr("id");
+		        appointments.push(appointment);
+	    	}
+	    });
+	    
+	}
+
+
+
+
+
 
 
 
