@@ -287,7 +287,7 @@ td.calendar__days--selected:hover {
 }
 
 td.calendar__days--beforetoday {
-	color: rgba(192, 192, 207, 0.2);
+	color: rgba(192, 192, 207, 1);
 	cursor: not-allowed;
 }
 
