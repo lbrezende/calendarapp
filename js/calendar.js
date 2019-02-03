@@ -77,6 +77,144 @@ $(document).ready(function(){
 		});
 	}
 
+/* 
+   createData
+   Creates Json object with all days subject empty
+   Author: Leandro Rezende
+   Feb 2 2019
+*/
+	function createData() {
+	    appointments = [];
+	    $(".calendar__days td").each(function() {
+
+	    	if ($(this).attr("id")) {
+		        appointment = {}
+		        appointment ["day"] = $(this).attr("day");
+		        appointment ["month"] = $(this).attr("month");
+		        appointment ["year"] = $(this).attr("year");
+		        appointment ["subject"] = "";
+		        appointment ["id"] = $(this).attr("id");
+		        appointments.push(appointment);
+	    	}
+	    });
+	    
+	}
+
+/* 
+   setSubject
+   Writes a new subject for a defined day
+   Author: Leandro Rezende
+   Feb 2 2019
+*/
+	function setSubject(identifier, subject) {
+	  for (var i = 0; i < appointments.length; i++) {
+	  	//Finds the object with the same id and updates the subject
+	    if (appointments[i].id === identifier) {
+	      appointments[i].subject = subject;
+	      return;
+	    }
+	  }
+	}
+
+/* 
+   removeSubject
+   Updates the subject with empty state
+   Author: Leandro Rezende
+   Feb 2 2019
+*/
+	function removeSubject(identifier) {
+	  for (var i = 0; i < appointments.length; i++) {
+	  	//Finds the object with the same id and updates the subject
+	    if (appointments[i].id === identifier) {
+	      appointments[i].subject = "";
+	      return;
+	    }
+	  }
+	}
+
+/* 
+   getSubject
+   Returns the subject for a defined id
+   Author: Leandro Rezende
+   Feb 2 2019
+*/
+	function getSubject(identifier) {
+
+	  for (var i = 0; i < appointments.length; i++) {
+	  	//Finds the object with the same id and updates the subject
+	    if (appointments[i].id === identifier) {
+	      return appointments[i].subject;
+	    }
+	  }
+	}
+/* 
+   addAppointment
+   This function is called if the user clicks #addAppointment and text area is not empty
+   Saves the date in the json
+   Author: Leandro Rezende
+   Feb 2 2019
+*/
+	function addAppointment(dateObject) {
+
+		//Get the text in the textarea and adds to json 
+		id = dateObject.attr("date");
+		var subject = $("#calendar-details__textarea").val();
+		setSubject(id, subject);
+
+		//Calls the functions that reads the apointmnets and draw in the calendar
+		drawCalendarAppointments();
+
+	}
+
+/* 
+   removeAppointment
+   This function is called if the user clicks #removeAppointment and removes the subject
+   Author: Leandro Rezende
+   Feb 2 2019
+*/
+	function removeAppointment(dateObject) {
+
+		//Get the text area #calendar-details__textarea 
+		id = dateObject.attr("date");
+		removeSubject(id);
+
+		//Creates animation to feedback user the appointment has gonne
+		$("#calendar-details").addClass("slide-out-elliptic-top-bck");
+
+		//Calls the functions that reads the apointmnets and draw in the calendar
+		drawCalendarAppointments();
+	}
+
+/* 
+   updateAppointment
+   This function is called if the user clicks #updateAppointment and updates the subject
+   Author: Leandro Rezende
+   Feb 2 2019
+*/
+	//it is called when the user clicks #updateAppointment update button and text area is not empty
+	function updateAppointment(dateObject) {
+
+		//Get the text area #calendar-details__textarea 
+		id = dateObject.attr("date");
+		var subject = $("#calendar-details__textarea").val();
+		setSubject(id, subject);
+
+		//Calls the functions that reads the apointmnets and draw in the calendar
+		drawCalendarAppointments();
+		
+	}
+
+/* 
+   closeAppointment
+   This function is called after all actions in the calendar details to close the box
+   Author: Leandro Rezende
+   Feb 2 2019
+*/
+	function closeAppointment() {
+		$("#calendar-details").addClass("swing-out-left-bck");
+		var appointmentContent = $("#calendar-details__textarea").text("");
+	}
+
 
 /* 
    drawCalendarAppointments
@@ -175,74 +313,6 @@ $(document).ready(function(){
 	}
 
 /* 
-   addAppointment
-   This function is called if the user clicks #addAppointment and text area is not empty
-   Saves the date in the json
-   Author: Leandro Rezende
-   Feb 2 2019
-*/
-	function addAppointment(dateObject) {
-
-		//Get the text in the textarea and adds to json 
-		id = dateObject.attr("date");
-		var subject = $("#calendar-details__textarea").val();
-		setSubject(id, subject);
-
-		//Calls the functions that reads the apointmnets and draw in the calendar
-		drawCalendarAppointments();
-
-	}
-
-/* 
-   removeAppointment
-   This function is called if the user clicks #removeAppointment and removes the subject
-   Author: Leandro Rezende
-   Feb 2 2019
-*/
-	function removeAppointment(dateObject) {
-
-		//Get the text area #calendar-details__textarea 
-		id = dateObject.attr("date");
-		removeSubject(id);
-
-		//Creates animation to feedback user the appointment has gonne
-		$("#calendar-details").addClass("slide-out-elliptic-top-bck");
-
-		//Calls the functions that reads the apointmnets and draw in the calendar
-		drawCalendarAppointments();
-	}
-
-/* 
-   updateAppointment
-   This function is called if the user clicks #updateAppointment and updates the subject
-   Author: Leandro Rezende
-   Feb 2 2019
-*/
-	//it is called when the user clicks #updateAppointment update button and text area is not empty
-	function updateAppointment(dateObject) {
-
-		//Get the text area #calendar-details__textarea 
-		id = dateObject.attr("date");
-		var subject = $("#calendar-details__textarea").val();
-		setSubject(id, subject);
-
-		//Calls the functions that reads the apointmnets and draw in the calendar
-		drawCalendarAppointments();
-		
-	}
-
-/* 
-   closeAppointment
-   This function is called after all actions in the calendar details to close the box
-   Author: Leandro Rezende
-   Feb 2 2019
-*/
-	function closeAppointment() {
-		$("#calendar-details").addClass("swing-out-left-bck");
-		var appointmentContent = $("#calendar-details__textarea").text("");
-	}
-
-/* 
    initializeDates
    This function makes the math magic. February number of the days, number of days in the month
    and simliar stuff
@@ -321,7 +391,7 @@ $(document).ready(function(){
 
 					//Adds the blank days of the previous month
 					while (blankCounter <= weekdays) {
-					 calendarHTML += "<td class=\"calendar__days--beforetoday\">&nbsp;</td>";
+					 calendarHTML += "<td id=\"othermonth-"+weekdays+"\" class=\"calendar__days--beforetoday\">&nbsp;</td>";
 					 weekdays--;
 					};
 
@@ -379,78 +449,6 @@ $(document).ready(function(){
 		var calendarDetailsHTML = "<div id=\"calendar-details\" style=\"display:none\"><div class=\"calendar-details__title\"><span id=\"currentMonthSmall\">"+currentMonthNameMMM+"</span>, <span id=\"currentDay\">"+currentDayDD+"</span><span id=\"hideDetail\" style=\"float:right; cursor:pointer\">x</span></div><div class=\"calendar-details__subject--header\">Your appointment</div><div class=\"calendar-details__subject\"><textarea id=\"calendar-details__textarea\" type=\"text\" name=\"subject\" placeholder=\"Type the subject...\"></textarea><div class=\"emptyTextAreaButtons\"><button id=\"updateAppointment\" class=\"calendar-details__button-primary\" >Update </button><button id=\"removeAppointment\" class=\"calendar-details__button-primary\">Remove </button></div><div class=\"filledTextAreaButtons\"><button id=\"addAppointment\" class=\"calendar-details__button-primary\">Add appointment</button></div></div></div>";
 
 		$("#calendarDetailsArea").html(calendarDetailsHTML);
-	}
-
-/* 
-   createData
-   Creates Json object with all days subject empty
-   Author: Leandro Rezende
-   Feb 2 2019
-*/
-	function createData() {
-	    appointments = [];
-	    $(".calendar__days td").each(function() {
-
-	    	if ($(this).attr("id")) {
-		        appointment = {}
-		        appointment ["day"] = $(this).attr("day");
-		        appointment ["month"] = $(this).attr("month");
-		        appointment ["year"] = $(this).attr("year");
-		        appointment ["subject"] = "";
-		        appointment ["id"] = $(this).attr("id");
-		        appointments.push(appointment);
-	    	}
-	    });
-	    
-	}
-
-
-/* 
-   setSubject
-   Writes a new subject for a defined day
-   Author: Leandro Rezende
-   Feb 2 2019
-*/
-	function setSubject(identifier, subject) {
-	  for (var i = 0; i < appointments.length; i++) {
-	  	//Finds the object with the same id and updates the subject
-	    if (appointments[i].id === identifier) {
-	      appointments[i].subject = subject;
-	      return;
-	    }
-	  }
-	}
-
-/* 
-   removeSubject
-   Updates the subject with empty state
-   Author: Leandro Rezende
-   Feb 2 2019
-*/
-	function removeSubject(identifier) {
-	  for (var i = 0; i < appointments.length; i++) {
-	  	//Finds the object with the same id and updates the subject
-	    if (appointments[i].id === identifier) {
-	      appointments[i].subject = "";
-	      return;
-	    }
-	  }
-	}
-
-/* 
-   getSubject
-   Returns the subject for a defined id
-   Author: Leandro Rezende
-   Feb 2 2019
-*/
-	function getSubject(identifier) {
-
-	  for (var i = 0; i < appointments.length; i++) {
-	  	//Finds the object with the same id and updates the subject
-	    if (appointments[i].id === identifier) {
-	      return appointments[i].subject;
-	    }
-	  }
 	}
 
 
