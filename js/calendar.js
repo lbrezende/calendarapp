@@ -455,10 +455,10 @@ $(document).ready(function(){
 });
 
 /*****************************************************************
-Thanks for reading! I am available to work abroad. 
+Thanks for reading!
 
 This is not an amazing javascript. Not great archtecture... 
-but I rock as UX & UI Designer and Product Management!
+but I rock as UX & UI Designer and Product Manager!
 
 Find me at lbrezende@gmail.com
 ****************************************************************/

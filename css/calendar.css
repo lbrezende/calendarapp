@@ -70,7 +70,7 @@ body {
 }
 
 h1 {
-	font-size: 2em;
+	font-size: 1.4em;
 	margin-bottom: 20px
 }
  
@@ -79,6 +79,12 @@ p, ul {
 	margin-bottom: 20px;
 }
 
+div.instructions {
+	font-size:0.8em;
+}
+
+
+
 li {
 	list-style: circle;
 	margin-left: 20px;
@@ -86,6 +92,7 @@ li {
 
 .container {
 	max-width: 1200px;
+	margin-top:30px;
 	margin: 0 auto;
 }
 
@@ -503,5 +510,9 @@ Animations
 }
 
 
+/*****************************************************************
+Thanks for reading!
 
+Find me at lbrezende@gmail.com
+****************************************************************/
 

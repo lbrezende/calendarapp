@@ -1,12 +1,27 @@
 <!--
 index.html
-author:	Leandro Rezende
+author:	Leandro Rezende - Product Designer
+leandrorezende
 date: feb 3, 2019
 
-Using jQuery with JSON to create a calendar and main actions like
-update, create, delete and list
+Find me at lbrezende@gmail.com
+Resume: http://bit.ly/leandrorezendeux
 
+# Demo
+
+[See it working!](http://bit.ly/calendarcodepen)
+
+Using jQuery with JSON to create a calendar and main actions like update, create, delete and list
 License: none (public domain)
+-->
+
+<!--
+Instructions. 2 days challenge:
+Make a calendar app. The calendar should display all the dates for the current month. The calendar app should also be able to mark appointments. The app must have the following functionality:
+
+Any appointment can be made for the current day or for a future date.
+No two appointments should overlap. If an appointment already exists for a day, a warning should be shown.
+Appointments can be edited and deleted.
 -->
 
 <!doctype html>
@@ -16,39 +31,44 @@ License: none (public domain)
 		<title>Calendar App</title>
 		<link rel="stylesheet" href="css/calendar.css">
 		<link href="https://fonts.googleapis.com/css?family=Roboto:300,400" rel="stylesheet">
-	</head>
-	<body>
 		<script
   src="https://code.jquery.com/jquery-2.2.4.min.js"
   integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
   crossorigin="anonymous"></script>
 		<script src="js/calendar.js"></script>
+	</head>
+	<body>
+	<!--
+	Instructions at Hacker Hank
+	-->
+
+		<div class="container">
+			<div class="instructions">
+				<h1>Instructions. 2 days challenge:</h1>
+
+				<p>Make a <em>calendar app</em>. The calendar should display all the dates for the current month. The calendar app should also be able to mark appointments. The app must have the following functionality:</p>
+
+				<ul>
+					<li>Any appointment can be made for the current day or for a future date.</li>
+					<li>No two appointments should overlap. If an&nbsp;appointment already&nbsp;exists for a day, a warning should be shown.</li>
+					<li>Appointments can be edited and deleted.</li>
+				</ul>
+				<ul>
+					<li>See it working here: <a target="_blank" href="http://bit.ly/calendarcodepen">Calendar at Codepen</a></li>
+					<li>See the design process: <a target="_blank" href="http://bit.ly/calendarprocess">How it was built</a></li>
+					<li>See the interface decisions: <a target="_blank" href="http://bit.ly/calendarstyle">Calendar styleguide</a></li>
+					<li>See some calendars that inspired me: <a target="_blank" href="http://bit.ly/calendarreferences">Calendar references</a></li>
+					<li>See it at github: <a target="_blank" href="http://bit.ly/calendargithub">Calendar github</a></li>
+				</ul>
+			</div>
+
+			<!--
+			Render the magic calendar
+			-->
+
+			<div id="calendarArea"></div>
+			<div id="calendarDetailsArea"></div>
+		</div>
+
 	</body>
 </html>
-
-<!--
-Instructions at Hacker Hank
--->
-
-<div class="container">
-	<div class="instructions">
-		<h1>Instructions</h1>
-
-		<p>Make a <em>calendar app</em>. The calendar should display all the dates for the current month. The calendar app should also be able to mark appointments. The app must have the following functionality:</p>
-
-		<ul>
-			<li>Any appointment can be made for the current day or for a future date.</li>
-			<li>No two appointments should overlap. If an&nbsp;appointment already&nbsp;exists for a day, a warning should be shown.</li>
-			<li>Appointments can be edited and deleted.</li>
-		</ul>
-	</div>
-
-<!--
-Render the magic calendar
--->
-
-	<div id="calendarArea"></div>
-	<div id="calendarDetailsArea"></div>
-
-
-</div>
